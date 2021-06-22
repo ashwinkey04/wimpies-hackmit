@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinder_app_flutter/data/model/top_navigation_item.dart';
+import 'package:tinder_app_flutter/ui/screens/top_navigation_screens/event_screen.dart';
 import 'package:tinder_app_flutter/ui/screens/top_navigation_screens/profile_screen.dart';
 import 'top_navigation_screens/chats_screen.dart';
 import 'top_navigation_screens/match_screen.dart';
@@ -18,6 +19,10 @@ class TopNavigationScreen extends StatelessWidget {
     TopNavigationItem(
       screen: MatchScreen(),
       iconData: Icons.favorite,
+    ),
+    TopNavigationItem(
+      screen: EventScreen(),
+      iconData: Icons.attractions_outlined,
     ),
   ];
 
@@ -47,7 +52,7 @@ class TopNavigationScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: Container(
                 child: TabBarView(
-                    physics: NeverScrollableScrollPhysics(),
+                    // physics: NeverScrollableScrollPhysics(),
                     children: navigationItems
                         .map((navItem) => navItem.screen)
                         .toList()),

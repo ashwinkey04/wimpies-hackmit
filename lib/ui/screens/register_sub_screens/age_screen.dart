@@ -13,7 +13,7 @@ class AgeScreen extends StatefulWidget {
 }
 
 class _AgeScreenState extends State<AgeScreen> {
-  int age = 0;
+  int age = 13;
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +38,14 @@ class _AgeScreenState extends State<AgeScreen> {
         Expanded(
           child: Center(
             child: Container(
-              child: NumberPicker.integer(
-                  listViewWidth: double.infinity,
+              child: NumberPicker(
+                  itemWidth: double.infinity,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white, width: 2),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  initialValue: age,
-                  minValue: 0,
+                  value: age,
+                  minValue: 12,
                   maxValue: 120,
                   onChanged: (value) => {
                         setState(() {

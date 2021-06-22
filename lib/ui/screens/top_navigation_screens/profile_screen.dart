@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder_app_flutter/data/db/entity/app_user.dart';
@@ -71,14 +74,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Bio', style: Theme.of(context).textTheme.headline4),
+            Text('About Me', style: Theme.of(context).textTheme.headline4),
             RoundedIconButton(
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (_) => InputDialog(
                     onSavePressed: (value) => userProvider.updateUserBio(value),
-                    labelText: 'Bio',
+                    labelText: 'About Me',
                     startInputText: user.bio,
                   ),
                 );
@@ -91,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         SizedBox(height: 5),
         Text(
-          user.bio.length > 0 ? user.bio : "No bio.",
+          user.bio.length > 0 ? user.bio : "You haven't described yourself.",
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
@@ -118,9 +121,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () async {
               final pickedFile =
                   await ImagePicker().getImage(source: ImageSource.gallery);
-              if (pickedFile != null) {
+              var _croppedImage = await ImageCropper.cropImage(
+                  sourcePath: pickedFile.path,
+                  aspectRatioPresets: Platform.isAndroid
+                      ? [
+                          CropAspectRatioPreset.square,
+                          CropAspectRatioPreset.ratio3x2,
+                          CropAspectRatioPreset.original,
+                          CropAspectRatioPreset.ratio4x3,
+                          CropAspectRatioPreset.ratio16x9
+                        ]
+                      : [
+                          CropAspectRatioPreset.original,
+                          CropAspectRatioPreset.square,
+                          CropAspectRatioPreset.ratio3x2,
+                          CropAspectRatioPreset.ratio4x3,
+                          CropAspectRatioPreset.ratio5x3,
+                          CropAspectRatioPreset.ratio5x4,
+                          CropAspectRatioPreset.ratio7x5,
+                          CropAspectRatioPreset.ratio16x9
+                        ],
+                  androidUiSettings: AndroidUiSettings(
+                      toolbarTitle: 'Crop',
+                      toolbarColor: Colors.black87,
+                      toolbarWidgetColor: Colors.white,
+                      activeControlsWidgetColor: kAccentColor,
+                      initAspectRatio: CropAspectRatioPreset.original,
+                      lockAspectRatio: false),
+                  iosUiSettings: IOSUiSettings(
+                    title: 'Cropper',
+                  ));
+              if (_croppedImage != null) {
                 firebaseProvider.updateUserProfilePhoto(
-                    pickedFile.path, _scaffoldKey);
+                    _croppedImage.path, _scaffoldKey);
               }
             },
             iconData: Icons.edit,

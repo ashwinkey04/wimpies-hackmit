@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tinder_app_flutter/ui/widgets/rounded_icon_button.dart';
 import 'package:tinder_app_flutter/ui/widgets/image_portrait.dart';
+import 'package:tinder_app_flutter/util/constants.dart';
 
 class AddPhotoScreen extends StatefulWidget {
   final Function(String) onPhotoChanged;
@@ -15,11 +19,53 @@ class AddPhotoScreen extends StatefulWidget {
 class _AddPhotoScreenState extends State<AddPhotoScreen> {
   final picker = ImagePicker();
   String _imagePath;
+  var _croppedImage;
 
   Future pickImageFromGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
+    try {
+      _croppedImage = await ImageCropper.cropImage(
+          sourcePath: pickedFile.path,
+          aspectRatioPresets: Platform.isAndroid
+              ? [
+                  CropAspectRatioPreset.square,
+                  CropAspectRatioPreset.ratio3x2,
+                  CropAspectRatioPreset.original,
+                  CropAspectRatioPreset.ratio4x3,
+                  CropAspectRatioPreset.ratio16x9
+                ]
+              : [
+                  CropAspectRatioPreset.original,
+                  CropAspectRatioPreset.square,
+                  CropAspectRatioPreset.ratio3x2,
+                  CropAspectRatioPreset.ratio4x3,
+                  CropAspectRatioPreset.ratio5x3,
+                  CropAspectRatioPreset.ratio5x4,
+                  CropAspectRatioPreset.ratio7x5,
+                  CropAspectRatioPreset.ratio16x9
+                ],
+          androidUiSettings: AndroidUiSettings(
+              toolbarTitle: 'Crop',
+              toolbarColor: Colors.black87,
+              toolbarWidgetColor: Colors.white,
+              activeControlsWidgetColor: kAccentColor,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          iosUiSettings: IOSUiSettings(
+            title: 'Cropper',
+          ));
+    } catch (_) {
+      print(_.toString());
+    }
+    if (_croppedImage != null) {
+      widget.onPhotoChanged(_croppedImage.path);
+
+      setState(() {
+        _imagePath = _croppedImage.path;
+      });
+    }
+    if (_croppedImage == null && pickedFile != null) {
       widget.onPhotoChanged(pickedFile.path);
 
       setState(() {
