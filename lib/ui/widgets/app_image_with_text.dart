@@ -9,13 +9,13 @@ class AppIconTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            child: Image.asset('images/tinder_icon.png'),
-            width: 32.0,
-            height: 32.0,
+            child: Image.asset('images/makefg.png'),
+            width: 46.0,
+            height: 46.0,
           ),
           SizedBox(width: 5.0),
           Text(
-            'Wimpies',
+            'Kaigi',
             style: Theme.of(context).textTheme.headline2,
           )
         ],
