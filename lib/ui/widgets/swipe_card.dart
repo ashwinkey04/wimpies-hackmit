@@ -24,8 +24,8 @@ class _SwipeCardState extends State<SwipeCard> {
           width: MediaQuery.of(context).size.width * 0.85,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(25.0),
-            child:
-                Image.network(widget.person.profilePhotoPath, fit: BoxFit.fill),
+            child: Image.network(widget.person.profilePhotoPath,
+                fit: BoxFit.fitWidth),
           ),
         ),
         Positioned(
@@ -64,7 +64,9 @@ class _SwipeCardState extends State<SwipeCard> {
                   text: widget.person.name,
                   style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
                 ),
-                TextSpan(text: '  ${widget.person.age}', style: TextStyle(fontSize: 20)),
+                TextSpan(
+                    text: '  ${widget.person.age}',
+                    style: TextStyle(fontSize: 20)),
               ],
             )),
           ],

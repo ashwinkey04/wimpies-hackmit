@@ -15,7 +15,7 @@ class AppIconTitle extends StatelessWidget {
           ),
           SizedBox(width: 5.0),
           Text(
-            'lorem',
+            'Wimpies',
             style: Theme.of(context).textTheme.headline2,
           )
         ],

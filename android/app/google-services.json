@@ -1,1 +1,39 @@
-replace this 
+{
+  "project_info": {
+    "project_number": "143882955394",
+    "project_id": "hackmit-d",
+    "storage_bucket": "hackmit-d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143882955394:android:342d82d30157c91e15229b",
+        "android_client_info": {
+          "package_name": "org.hackmit.wimpies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143882955394-23qid8tn1bv52me4l3op79khuqkg3r8d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWPx06g_7jqNIznWXSMl0cyTq0WiuxLlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143882955394-23qid8tn1bv52me4l3op79khuqkg3r8d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
