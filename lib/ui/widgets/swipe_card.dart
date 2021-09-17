@@ -24,8 +24,8 @@ class _SwipeCardState extends State<SwipeCard> {
           width: MediaQuery.of(context).size.width * 0.85,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(25.0),
-            child: Image.network(widget.person.profilePhotoPath,
-                fit: BoxFit.fitWidth),
+            child:
+                Image.network(widget.person.profilePhotoPath, fit: BoxFit.fill),
           ),
         ),
         Positioned(
