@@ -50,38 +50,40 @@ class _SwipeCardState extends State<SwipeCard> {
   }
 
   Widget getUserContent(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-                text: TextSpan(
-              style: DefaultTextStyle.of(context).style,
-              children: <TextSpan>[
-                TextSpan(
-                  text: widget.person.name,
-                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-                ),
-                TextSpan(
-                    text: '  ${widget.person.age}',
-                    style: TextStyle(fontSize: 20)),
-              ],
-            )),
-          ],
-        ),
-        RoundedIconButton(
-          onPressed: () {
-            setState(() {
-              showInfo = !showInfo;
-            });
-          },
-          iconData: showInfo ? Icons.arrow_downward : Icons.person,
-          iconSize: 16,
-          buttonColor: kColorPrimaryVariant,
-        ),
-      ],
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                  text: TextSpan(
+                style: DefaultTextStyle.of(context).style,
+                children: <TextSpan>[
+                  TextSpan(
+                    text: widget.person.name,
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                      text: '  ${widget.person.age}',
+                      style: TextStyle(fontSize: 20)),
+                ],
+              )),
+            ],
+          ),
+          RoundedIconButton(
+            onPressed: () {
+              setState(() {
+                showInfo = !showInfo;
+              });
+            },
+            iconData: showInfo ? Icons.arrow_downward : Icons.person,
+            iconSize: 16,
+            buttonColor: kColorPrimaryVariant,
+          ),
+        ],
+      ),
     );
   }
 

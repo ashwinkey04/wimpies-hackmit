@@ -41,3 +41,9 @@ flutter:
         - asset: fonts/Nunito-Regular.ttf
         - asset: fonts/Nunito-SemiBold.ttf
         - asset: fonts/Nunito-Bold.ttf
+    - family: OpenSans
+      fonts:
+        - asset: fonts/OpenSans-Bold.ttf
+        - asset: fonts/OpenSans-Light.ttf
+        - asset: fonts/OpenSans-Regular.ttf
+        - asset: fonts/OpenSans-Italic.ttf    
