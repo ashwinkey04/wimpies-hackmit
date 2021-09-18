@@ -1,3 +1,4 @@
+import 'package:breathing_collection/breathing_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:tinder_app_flutter/data/db/remote/firebase_database_source.dart';
 import 'package:tinder_app_flutter/ui/widgets/add_event.dart';
@@ -34,16 +35,29 @@ class _EventScreenState extends State<EventScreen> {
             );
           },
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        body: Stack(
           children: [
-            Padding(
-              padding: kDefaultPadding,
-              child: Text(
-                'Events',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-            )
+            BreathingBackground(
+              initialMainColor: Colors.black87,
+              transformedMainColor: Colors.black38,
+              initialSecondaryColor: Colors.grey[600],
+              transformedSecondaryColor: Colors.black,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              duration: Duration(seconds: 1),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: kDefaultPadding,
+                  child: Text(
+                    'Events',
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                )
+              ],
+            ),
           ],
         ));
   }
