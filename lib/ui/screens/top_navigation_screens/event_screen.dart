@@ -19,6 +19,11 @@ class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text('Events'),
+          centerTitle: true,
+        ),
         key: _scaffoldKey,
         floatingActionButton: FloatingActionButton(
           backgroundColor: kAccentColor,
@@ -44,7 +49,7 @@ class _EventScreenState extends State<EventScreen> {
               transformedSecondaryColor: Colors.black,
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              duration: Duration(seconds: 1),
+              duration: Duration(seconds: 5),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,

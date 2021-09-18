@@ -25,6 +25,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: Text('Message Center'),
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: Consumer<UserProvider>(
