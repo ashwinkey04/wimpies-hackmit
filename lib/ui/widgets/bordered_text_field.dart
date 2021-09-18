@@ -29,6 +29,7 @@ class BorderedTextField extends StatelessWidget {
       obscureText: obscureText,
       autofocus: autoFocus,
       keyboardType: keyboardType,
+      cursorColor: Colors.white,
       textCapitalization: textCapitalization,
       style: TextStyle(color: color),
       decoration: InputDecoration(
