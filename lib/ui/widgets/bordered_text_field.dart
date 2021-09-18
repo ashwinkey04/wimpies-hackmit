@@ -9,6 +9,7 @@ class BorderedTextField extends StatelessWidget {
   final bool autoFocus;
   final TextCapitalization textCapitalization;
   final textController;
+  final prefixIcon;
   // final Function onSubmit;
 
   BorderedTextField(
@@ -18,7 +19,8 @@ class BorderedTextField extends StatelessWidget {
       this.obscureText = false,
       this.autoFocus = false,
       this.textCapitalization = TextCapitalization.none,
-      this.textController
+      this.textController,
+      this.prefixIcon,
       // this.onSubmit
       });
 
@@ -37,6 +39,7 @@ class BorderedTextField extends StatelessWidget {
       style: TextStyle(color: color),
       // onSubmitted: onSubmit,
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
         labelText: labelText,
         labelStyle: TextStyle(color: kSecondaryColor.withOpacity(0.5)),
         border: UnderlineInputBorder(),
