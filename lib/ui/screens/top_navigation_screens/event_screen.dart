@@ -2,7 +2,6 @@ import 'package:breathing_collection/breathing_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:tinder_app_flutter/data/db/remote/firebase_database_source.dart';
 import 'package:tinder_app_flutter/ui/widgets/add_event.dart';
-import 'package:tinder_app_flutter/ui/widgets/input_dialog.dart';
 import 'package:tinder_app_flutter/util/constants.dart';
 
 class EventScreen extends StatefulWidget {
@@ -37,15 +36,15 @@ class _EventScreenState extends State<EventScreen> {
         ),
         body: Stack(
           children: [
-            BreathingBackground(
-              initialMainColor: Colors.black87,
-              transformedMainColor: Colors.black38,
-              initialSecondaryColor: Colors.grey[600],
-              transformedSecondaryColor: Colors.black,
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              duration: Duration(seconds: 1),
-            ),
+            // BreathingBackground(
+            //   initialMainColor: Colors.black87,
+            //   transformedMainColor: Colors.black38,
+            //   initialSecondaryColor: Colors.orange[100],
+            //   transformedSecondaryColor: Colors.black,
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            //   duration: Duration(seconds: 3),
+            // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
