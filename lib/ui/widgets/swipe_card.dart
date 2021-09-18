@@ -33,6 +33,24 @@ class _SwipeCardState extends State<SwipeCard> {
           left: 0,
           right: 0,
           child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25)),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [
+                    0,
+                    0.7,
+                    1
+                  ],
+                  colors: [
+                    Color.fromRGBO(0, 0, 0, 0.85),
+                    Color.fromRGBO(0, 0, 0, 0.4),
+                    Color.fromRGBO(0, 0, 0, 0),
+                  ]),
+            ),
             child: Column(
               children: [
                 Padding(
