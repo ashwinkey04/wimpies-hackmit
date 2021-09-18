@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart' as fgp;
 import 'package:tinder_app_flutter/ui/widgets/bordered_text_field.dart';
 import 'package:tinder_app_flutter/util/constants.dart';
 
@@ -39,33 +40,99 @@ class _AddEventDialogState extends State<AddEventDialog> {
       backgroundColor: kBackgroundColor,
       contentPadding: EdgeInsets.all(16.0),
       content: Container(
-        height: 330,
+        height: 390,
         width: 300,
         child: Column(
           children: [
             BorderedTextField(
               textCapitalization: TextCapitalization.sentences,
               labelText: 'Event Name',
+              prefixIcon: Icon(
+                Icons.attractions_outlined,
+                size: 24,
+                color: Colors.white,
+              ),
               autoFocus: true,
               keyboardType: TextInputType.text,
               onChanged: (value) => {eventNameText = value},
               textController: eventNameController,
             ),
-            BorderedTextField(
-              textCapitalization: TextCapitalization.sentences,
-              labelText: 'Location',
-              autoFocus: true,
-              keyboardType: TextInputType.text,
-              onChanged: (value) => {eventLocationText = value},
-              textController: eventLocationController,
-            ),
+            InkWell(
+                onTap: () async {
+                  final kGoogleApiKey = '';
+                  // = "";
+                  var _selectedLocation = await fgp.PlacesAutocomplete.show(
+                    context: context,
+                    apiKey: kGoogleApiKey,
+                    radius: 10000000,
+                    types: [],
+                    strictbounds: false,
+                    mode: fgp.Mode.overlay,
+                    language: "en",
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    components: [],
+                  );
+
+                  setState(() {
+                    eventLocationController.text =
+                        _selectedLocation.description;
+                  });
+
+                  debugPrint('Place ID: ' + _selectedLocation.placeId);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12, right: 12, top: 24, bottom: 8),
+                  // symmetric(vertical: 14, horizontal: 12),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        size: 24,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 18),
+                      Container(
+                        width: 200,
+                        child: Text(
+                          eventLocationController.text != ''
+                              ? eventLocationController.text
+                              : 'Location',
+                          style: TextStyle(color: Colors.grey[200]),
+                          overflow: TextOverflow.clip,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+            // BorderedTextField(
+            //   textCapitalization: TextCapitalization.sentences,
+            //   labelText: 'Location',
+            //   prefixIcon: Icon(
+            //     Icons.location_on,
+            //     size: 24,
+            //     color: Colors.white,
+            //   ),
+            //   // autoFocus: true,
+            //   keyboardType: TextInputType.text,
+            //   onChanged: (value) => {eventLocationText = value},
+            //   textController: eventLocationController,
+            // ),
             InkWell(
                 onTap: () async {
                   var _date = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
-                      lastDate: DateTime.parse('2028-02-27 13:27:00'));
+                      lastDate: DateTime.parse('2088-12-30 23:59:00'));
                   setState(() {
                     eventDateController.text =
                         '${_date.month}/${_date.day}/${_date.year}';
@@ -73,7 +140,7 @@ class _AddEventDialogState extends State<AddEventDialog> {
                 },
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 28, horizontal: 4),
+                      const EdgeInsets.symmetric(vertical: 28, horizontal: 12),
                   child: Row(
                     children: [
                       Icon(
@@ -82,14 +149,11 @@ class _AddEventDialogState extends State<AddEventDialog> {
                         color: Colors.white,
                       ),
                       SizedBox(width: 18),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          eventDateController.text != ''
-                              ? eventDateController.text
-                              : 'Date',
-                          style: TextStyle(color: Colors.grey[200]),
-                        ),
+                      Text(
+                        eventDateController.text != ''
+                            ? eventDateController.text
+                            : 'Date',
+                        style: TextStyle(color: Colors.grey[200]),
                       ),
                     ],
                   ),
@@ -101,7 +165,8 @@ class _AddEventDialogState extends State<AddEventDialog> {
                     initialTime: TimeOfDay.now(),
                   );
                   setState(() {
-                    eventTimeController.text = '${_time.hour}:${_time.minute}';
+                    eventTimeController.text =
+                        '${_time.hour}:${_time.minute.toString().padLeft(2, '0')}';
                   });
                 },
                 child: Padding(
@@ -109,20 +174,21 @@ class _AddEventDialogState extends State<AddEventDialog> {
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 4),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.timer,
-                        size: 24,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 18),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          eventTimeController.text != ''
-                              ? eventTimeController.text
-                              : 'Time',
-                          style: TextStyle(color: Colors.grey[200]),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8.0),
+                        child: Icon(
+                          Icons.timer,
+                          size: 24,
+                          color: Colors.white,
                         ),
+                      ),
+                      SizedBox(width: 14),
+                      Text(
+                        eventTimeController.text != ''
+                            ? eventTimeController.text
+                            : 'Time',
+                        style: TextStyle(color: Colors.grey[200]),
                       ),
                     ],
                   ),
