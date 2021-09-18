@@ -9,8 +9,8 @@ class TopNavigationScreen extends StatelessWidget {
   static const String id = 'top_navigation_screen';
   final List<TopNavigationItem> navigationItems = [
     TopNavigationItem(
-      screen: ProfileScreen(),
-      iconData: Icons.person,
+      screen: EventScreen(),
+      iconData: Icons.attractions_outlined,
     ),
     TopNavigationItem(
       screen: ChatsScreen(),
@@ -18,11 +18,11 @@ class TopNavigationScreen extends StatelessWidget {
     ),
     TopNavigationItem(
       screen: MatchScreen(),
-      iconData: Icons.favorite,
+      iconData: Icons.search,
     ),
     TopNavigationItem(
-      screen: EventScreen(),
-      iconData: Icons.attractions_outlined,
+      screen: ProfileScreen(),
+      iconData: Icons.person,
     ),
   ];
 

@@ -56,6 +56,7 @@ class _MatchScreenState extends State<MatchScreen> {
 
         Navigator.pushNamed(context, MatchedScreen.id, arguments: {
           "my_user_id": myUser.id,
+          "other_user_name": otherUser.name,
           "my_profile_photo_path": myUser.profilePhotoPath,
           "other_user_profile_photo_path": otherUser.profilePhotoPath,
           "other_user_id": otherUser.id
@@ -150,7 +151,7 @@ class _MatchScreenState extends State<MatchScreen> {
                                                         snapshot.data,
                                                         true);
                                                   },
-                                                  iconData: Icons.favorite,
+                                                  iconData: Icons.person_add,
                                                   iconSize: 30,
                                                 ),
                                               ],

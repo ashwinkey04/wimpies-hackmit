@@ -13,12 +13,14 @@ class MatchedScreen extends StatelessWidget {
 
   final String myProfilePhotoPath;
   final String myUserId;
+  final String otherUserName;
   final String otherUserProfilePhotoPath;
   final String otherUserId;
 
   MatchedScreen(
       {@required this.myProfilePhotoPath,
       @required this.myUserId,
+      @required this.otherUserName,
       @required this.otherUserProfilePhotoPath,
       @required this.otherUserId});
 
@@ -49,16 +51,25 @@ class MatchedScreen extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 40),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('images/tinder_icon.png', width: 40),
+              Image.asset('images/makefg.png', width: 40),
+              Text(
+                'You\'re getting noticed!',
+                style: Theme.of(context).textTheme.headline4,
+              ),
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Portrait(imageUrl: myProfilePhotoPath),
+                    // Portrait(imageUrl: myProfilePhotoPath),
                     Portrait(imageUrl: otherUserProfilePhotoPath)
                   ],
                 ),
+              ),
+              Text(
+                otherUserName,
+                style: Theme.of(context).textTheme.headline3,
               ),
               Column(
                 children: [
@@ -69,7 +80,7 @@ class MatchedScreen extends StatelessWidget {
                       }),
                   SizedBox(height: 20),
                   RoundedOutlinedButton(
-                      text: 'KEEP SWIPING',
+                      text: 'EXPLORE',
                       onPressed: () {
                         keepSwipingPressed(context);
                       }),
