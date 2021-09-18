@@ -133,6 +133,7 @@ class ChatScreen extends StatelessWidget {
             Expanded(
               child: TextField(
                 controller: messageTextController,
+                cursorColor: Colors.white,
                 textCapitalization: TextCapitalization.sentences,
                 style: TextStyle(color: kSecondaryColor),
                 decoration: InputDecoration(
