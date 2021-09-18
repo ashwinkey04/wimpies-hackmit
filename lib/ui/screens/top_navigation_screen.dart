@@ -5,62 +5,74 @@ import 'package:tinder_app_flutter/ui/screens/top_navigation_screens/profile_scr
 import 'top_navigation_screens/chats_screen.dart';
 import 'top_navigation_screens/match_screen.dart';
 
-class TopNavigationScreen extends StatelessWidget {
+class TopNavigationScreen extends StatefulWidget {
   static const String id = 'top_navigation_screen';
-  final List<TopNavigationItem> navigationItems = [
-    TopNavigationItem(
-      screen: EventScreen(),
-      iconData: Icons.attractions_outlined,
-    ),
-    TopNavigationItem(
-      screen: ChatsScreen(),
-      iconData: Icons.message_rounded,
-    ),
-    TopNavigationItem(
-      screen: MatchScreen(),
-      iconData: Icons.search,
-    ),
-    TopNavigationItem(
-      screen: ProfileScreen(),
-      iconData: Icons.person,
-    ),
-  ];
+
+  @override
+  _TopNavigationScreenState createState() => _TopNavigationScreenState();
+}
+
+class _TopNavigationScreenState extends State<TopNavigationScreen> {
+  int _currentIndex = 0;
+
+  _getDrawerItemWidget(int pos) {
+    switch (pos) {
+      case 0:
+        return new EventScreen();
+        
+      case 1:
+        return new ChatsScreen();
+      case 2:
+        return new MatchScreen();
+      case 3:
+        return new ProfileScreen();
+
+      default:
+        return new Text("Error");
+    }
+  }
+
+  List<String> titleList = ["Profile", "Chat", "Match", "Events"];
 
   @override
   Widget build(BuildContext context) {
-    var tabBar = TabBar(
-      tabs: navigationItems
-          .map((navItem) => Container(
-              height: double.infinity,
-              child: Tab(icon: Icon(navItem.iconData, size: 26))))
-          .toList(),
-    );
-
-    var appBar = AppBar(flexibleSpace: tabBar);
-
-    return DefaultTabController(
-      length: navigationItems.length,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: appBar,
-          body: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Container(
-              height: MediaQuery.of(context).size.height -
-                  tabBar.preferredSize.height -
-                  appBar.preferredSize.height,
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                child: TabBarView(
-                    // physics: NeverScrollableScrollPhysics(),
-                    children: navigationItems
-                        .map((navItem) => navItem.screen)
-                        .toList()),
-              ),
-            ),
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('Kaigi'),
+      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey,
+        // selectedLabelStyle: Colors.white,
+        // unselectedLabelStyle: textTheme.caption,
+        onTap: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            title: Text('Events'),
+            icon: Icon(Icons.attractions_rounded),
           ),
-        ),
+          BottomNavigationBarItem(
+            title: Text('Messages'),
+            icon: Icon(Icons.message_rounded),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Meet'),
+            icon: Icon(Icons.group_outlined),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Profile'),
+            icon: Icon(Icons.person),
+          ),
+        ],
       ),
+      body: _getDrawerItemWidget(_currentIndex),
     );
   }
 }

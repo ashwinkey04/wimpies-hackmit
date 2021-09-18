@@ -82,6 +82,11 @@ class _MatchScreenState extends State<MatchScreen> {
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text('Meet new people'),
+          centerTitle: true,
+        ),
         key: _scaffoldKey,
         body: Container(child: Consumer<UserProvider>(
           builder: (context, userProvider, child) {
@@ -114,7 +119,7 @@ class _MatchScreenState extends State<MatchScreen> {
                             }
                             return Container(
                               child: Padding(
-                                padding: EdgeInsets.all(12.0),
+                                padding: EdgeInsets.all(1.0),
                                 child: Container(
                                   child: Column(
                                     crossAxisAlignment:

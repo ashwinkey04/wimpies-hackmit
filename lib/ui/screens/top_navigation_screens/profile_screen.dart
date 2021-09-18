@@ -31,6 +31,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('My Profile'),
+        centerTitle: true,
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(
           vertical: 42.0,
