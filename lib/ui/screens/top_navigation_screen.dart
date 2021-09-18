@@ -22,7 +22,7 @@ class TopNavigationScreen extends StatelessWidget {
     ),
     TopNavigationItem(
       screen: EventScreen(),
-      iconData: Icons.accessibility,
+      iconData: Icons.attractions_outlined,
     ),
   ];
 

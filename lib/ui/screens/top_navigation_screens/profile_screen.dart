@@ -74,14 +74,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Bio', style: Theme.of(context).textTheme.headline4),
+            Text('About Me', style: Theme.of(context).textTheme.headline4),
             RoundedIconButton(
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (_) => InputDialog(
                     onSavePressed: (value) => userProvider.updateUserBio(value),
-                    labelText: 'Bio',
+                    labelText: 'About Me',
                     startInputText: user.bio,
                   ),
                 );
@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         SizedBox(height: 5),
         Text(
-          user.bio.length > 0 ? user.bio : "No bio.",
+          user.bio.length > 0 ? user.bio : "You haven't described yourself.",
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
