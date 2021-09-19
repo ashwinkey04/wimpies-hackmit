@@ -10,13 +10,17 @@ class FirebaseDatabaseSource {
   final FirebaseFirestore instance = FirebaseFirestore.instance;
 
   void addEvent(Event event) {
-    instance.collection('event').add(({
-      'name':event.name,
-      'placeId':event.placeID,
-      'time':event.time,
-      'date':event.date
-    })).then((value) => print('Event added'))
-    .catchError((err) => print('Event add error ${err.toString()}'));
+    instance
+        .collection('event')
+        .add(({
+          'hostName': event.hostName,
+          'name': event.name,
+          'placeId': event.placeID,
+          'time': event.time,
+          'date': event.date
+        }))
+        .then((value) => print('Event added'))
+        .catchError((err) => print('Event add error ${err.toString()}'));
   }
 
   void addUser(AppUser user) {
@@ -68,6 +72,14 @@ class FirebaseDatabaseSource {
         .collection('messages')
         .doc(messageId)
         .update(message.toMap());
+  }
+
+  Future<QuerySnapshot> getEvents() {
+    return instance.collection('event').get();
+  }
+
+  Future<DocumentSnapshot> getEventById(String eventId) {
+    return instance.collection('event').doc(eventId).get();
   }
 
   Future<DocumentSnapshot> getUser(String userId) {

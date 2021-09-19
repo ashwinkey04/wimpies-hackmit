@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_google_places/flutter_google_places.dart' as fgp;
 import 'package:google_maps_webservice/places.dart';
+import 'package:provider/provider.dart';
+import 'package:tinder_app_flutter/data/db/entity/app_user.dart';
 import 'package:tinder_app_flutter/data/db/entity/event.dart';
+import 'package:tinder_app_flutter/data/provider/user_provider.dart';
 import 'package:tinder_app_flutter/ui/widgets/bordered_text_field.dart';
+import 'package:tinder_app_flutter/ui/widgets/custom_modal_progress_hud.dart';
 import 'package:tinder_app_flutter/util/constants.dart';
 
 class AddEventDialog extends StatefulWidget {
@@ -222,22 +226,34 @@ class _AddEventDialogState extends State<AddEventDialog> {
             Navigator.pop(context);
           },
         ),
-        FlatButton(
-          color: kAccentColor,
-          child: Text(
-            'SAVE',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          onPressed: () {
-            Event event = Event(
-                name: eventNameText,
-                placeID: eventPlaceId,
-                time: eventTimeController.text,
-                date: eventDateController.text);
-            widget.onSavePressed(event);
-            Navigator.pop(context);
-          },
-        ),
+        Consumer<UserProvider>(builder: (context, userProvider, child) {
+          return FutureBuilder<AppUser>(
+              future: userProvider.user,
+              builder: (context, userSnapshot) {
+                return CustomModalProgressHUD(
+                    inAsyncCall:
+                        userProvider.user == null || userProvider.isLoading,
+                    child: userSnapshot.hasData
+                        ? FlatButton(
+                            color: kAccentColor,
+                            child: Text(
+                              'SAVE',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            onPressed: () {
+                              Event event = Event(
+                                  hostName: userSnapshot.data.name,
+                                  name: eventNameText,
+                                  placeID: eventPlaceId,
+                                  time: eventTimeController.text,
+                                  date: eventDateController.text);
+                              widget.onSavePressed(event);
+                              Navigator.pop(context);
+                            },
+                          )
+                        : Container());
+              });
+        }),
       ],
     );
   }
