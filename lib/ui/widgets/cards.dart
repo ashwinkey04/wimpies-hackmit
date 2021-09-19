@@ -1,30 +1,7 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(Cards());
-
-/// This Widget is the main application widget.
 class Cards extends StatelessWidget {
-  static const String _title = 'Food App Sample';
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: ListView(
-          children: <Widget>[
-            for (int i = 0; i < 2; i++) MyStatelessWidget(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// This is the stateless widget that the main application instantiates.
-class MyStatelessWidget extends StatelessWidget {
-  MyStatelessWidget({Key key}) : super(key: key);
+  Cards({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +18,7 @@ class MyStatelessWidget extends StatelessWidget {
           ),
           child: Container(
             width: 400,
-            height: 200,
+            height: 230,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
