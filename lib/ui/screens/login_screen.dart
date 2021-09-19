@@ -74,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) => _inputEmail = value,
+                    isBorder: true,
                   ),
                   SizedBox(height: 5),
                   BorderedTextField(
@@ -81,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: true,
                     keyboardType: TextInputType.text,
                     onChanged: (value) => _inputPassword = value,
+                    isBorder: true,
                   ),
                   Expanded(child: Container()),
                   RoundedButton(text: 'LOGIN', onPressed: () => loginPressed())

@@ -17,7 +17,8 @@ class FirebaseDatabaseSource {
           'name': event.name,
           'placeId': event.placeID,
           'time': event.time,
-          'date': event.date
+          'date': event.date,
+          'eventDesc': event.eventDesc,
         }))
         .then((value) => print('Event added'))
         .catchError((err) => print('Event add error ${err.toString()}'));

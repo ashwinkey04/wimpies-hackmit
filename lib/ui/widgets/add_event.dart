@@ -27,10 +27,13 @@ class _AddEventDialogState extends State<AddEventDialog> {
   String eventDateText = '';
   String eventTimeText = '';
   String eventPlaceId = '';
+  String eventDesc = '';
   final eventNameController = TextEditingController();
   final eventLocationController = TextEditingController();
   final eventDateController = TextEditingController();
   final eventTimeController = TextEditingController();
+  final eventDescController = TextEditingController();
+
   String kGoogleApiKey;
   GoogleMapsPlaces _googleMapsPlaces;
 
@@ -55,8 +58,8 @@ class _AddEventDialogState extends State<AddEventDialog> {
       backgroundColor: kBackgroundColor,
       contentPadding: EdgeInsets.all(16.0),
       content: Container(
-        height: 390,
-        width: 300,
+        height: 400,
+        width: 330,
         child: Column(
           children: [
             BorderedTextField(
@@ -71,6 +74,7 @@ class _AddEventDialogState extends State<AddEventDialog> {
               keyboardType: TextInputType.text,
               onChanged: (value) => {eventNameText = value},
               textController: eventNameController,
+              isBorder: true,
             ),
             InkWell(
                 onTap: () async {
@@ -212,6 +216,20 @@ class _AddEventDialogState extends State<AddEventDialog> {
                     ],
                   ),
                 )),
+            BorderedTextField(
+              textCapitalization: TextCapitalization.sentences,
+              labelText: 'Description',
+              prefixIcon: Icon(
+                Icons.notes,
+                size: 24,
+                color: Colors.white,
+              ),
+              autoFocus: true,
+              keyboardType: TextInputType.text,
+              onChanged: (value) => {eventDesc = value},
+              textController: eventDescController,
+              isBorder: false,
+            ),
           ],
         ),
       ),
@@ -246,7 +264,8 @@ class _AddEventDialogState extends State<AddEventDialog> {
                                   name: eventNameText,
                                   placeID: eventPlaceId,
                                   time: eventTimeController.text,
-                                  date: eventDateController.text);
+                                  date: eventDateController.text,
+                                  eventDesc: eventDesc);
                               widget.onSavePressed(event);
                               Navigator.pop(context);
                             },

@@ -31,6 +31,7 @@ class NameScreen extends StatelessWidget {
             labelText: 'Name',
             onChanged: onChanged,
             textCapitalization: TextCapitalization.words,
+                    isBorder: true,
           ),
         ),
       ],

@@ -26,12 +26,14 @@ class EmailAndPasswordScreen extends StatelessWidget {
           labelText: 'Email',
           onChanged: emailOnChanged,
           keyboardType: TextInputType.emailAddress,
+                    isBorder: true,
         ),
         SizedBox(height: 5),
         BorderedTextField(
           labelText: 'Password',
           onChanged: passwordOnChanged,
           obscureText: true,
+                    isBorder: true,
         ),
       ],
     );

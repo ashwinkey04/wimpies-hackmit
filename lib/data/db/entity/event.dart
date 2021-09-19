@@ -7,6 +7,7 @@ class Event {
   String placeID;
   String time;
   String date;
+  String eventDesc;
   // String image;
 
   Event(
@@ -14,7 +15,8 @@ class Event {
       @required this.name,
       @required this.placeID,
       this.time,
-      this.date});
+      this.date,
+      this.eventDesc});
 
   Event.fromSnapshot(DocumentSnapshot snapshot) {
     hostName = snapshot['hostName'];
@@ -22,6 +24,7 @@ class Event {
     placeID = snapshot['placeId'];
     time = snapshot['time'];
     date = snapshot['date'];
+    eventDesc = snapshot['eventDesc'];
   }
 
   Map<String, dynamic> toMap() {
@@ -30,7 +33,8 @@ class Event {
       'name': name,
       'placeID': placeID,
       'time': time,
-      'date': date
+      'date': date,
+      'eventDesc':eventDesc,
     };
   }
 }
