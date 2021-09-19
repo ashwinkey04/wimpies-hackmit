@@ -4,25 +4,28 @@ import 'package:flutter/material.dart';
 class Event {
   String id;
   String name;
-  String location;
-  DateTime time;
+  String placeID;
+  String time;
+  String date;
   // String image;
 
-
-  Event({@required this.id, @required this.name, @required this.location});
+  Event({this.id, @required this.name, @required this.placeID, this.time, this.date});
 
   Event.fromSnapshot(DocumentSnapshot snapshot) {
     id = snapshot['id'];
     name = snapshot['name'];
-    location = snapshot['location'];
-
+    placeID = snapshot['placeID'];
+    time = snapshot['time'];
+    date = snapshot['date'];
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'location': location
+      'placeID': placeID,
+      'time': time,
+      'date': date
     };
   }
 }

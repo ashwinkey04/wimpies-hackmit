@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_google_places/flutter_google_places.dart' as fgp;
+import 'package:google_maps_webservice/places.dart';
+import 'package:tinder_app_flutter/data/db/entity/event.dart';
 import 'package:tinder_app_flutter/ui/widgets/bordered_text_field.dart';
 import 'package:tinder_app_flutter/util/constants.dart';
 
 class AddEventDialog extends StatefulWidget {
-  final String labelText;
-  final Function(String) onSavePressed;
-  final String startInputText;
+  final Function(Event) onSavePressed;
 
   @override
   _AddEventDialogState createState() => _AddEventDialogState();
 
-  AddEventDialog(
-      {@required this.labelText,
-      @required this.onSavePressed,
-      this.startInputText = ''});
+  AddEventDialog({
+    @required this.onSavePressed,
+  });
 }
 
 class _AddEventDialogState extends State<AddEventDialog> {
@@ -23,11 +22,14 @@ class _AddEventDialogState extends State<AddEventDialog> {
   String eventLocationText = '';
   String eventDateText = '';
   String eventTimeText = '';
+  String eventPlaceId = '';
   final eventNameController = TextEditingController();
   final eventLocationController = TextEditingController();
   final eventDateController = TextEditingController();
   final eventTimeController = TextEditingController();
   String kGoogleApiKey;
+  GoogleMapsPlaces _googleMapsPlaces;
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +42,7 @@ class _AddEventDialogState extends State<AddEventDialog> {
     var k = new DotEnv();
     await k.load();
     kGoogleApiKey = k.env['PLACES_KEY'];
+    _googleMapsPlaces = GoogleMapsPlaces(apiKey: kGoogleApiKey);
   }
 
   @override
@@ -76,6 +79,8 @@ class _AddEventDialogState extends State<AddEventDialog> {
                     mode: fgp.Mode.overlay,
                     language: "en",
                     decoration: InputDecoration(
+                      fillColor: Colors.grey[900],
+                      hintStyle: Theme.of(context).textTheme.bodyText2,
                       hintText: 'Search',
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(35),
@@ -90,9 +95,13 @@ class _AddEventDialogState extends State<AddEventDialog> {
                   setState(() {
                     eventLocationController.text =
                         _selectedLocation.description;
+                    eventPlaceId = _selectedLocation.placeId;
                   });
-
-                  debugPrint('Place ID: ' + _selectedLocation.placeId);
+                  debugPrint('Place ID: ' + eventPlaceId);
+                  var placesDetail = await _googleMapsPlaces
+                      .getDetailsByPlaceId(_selectedLocation.placeId);
+                  debugPrint('Latitude: ' +
+                      (placesDetail.result.geometry.location.lat).toString());
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -220,7 +229,12 @@ class _AddEventDialogState extends State<AddEventDialog> {
             style: Theme.of(context).textTheme.bodyText1,
           ),
           onPressed: () {
-            widget.onSavePressed(eventNameText);
+            Event event = Event(
+                name: eventNameText,
+                placeID: eventPlaceId,
+                time: eventTimeController.text,
+                date: eventDateController.text);
+            widget.onSavePressed(event);
             Navigator.pop(context);
           },
         ),
