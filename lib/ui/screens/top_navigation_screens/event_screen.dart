@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:tinder_app_flutter/data/db/entity/event.dart';
 import 'package:tinder_app_flutter/data/db/remote/firebase_database_source.dart';
 import 'package:tinder_app_flutter/ui/widgets/add_event.dart';
+import 'package:tinder_app_flutter/ui/widgets/custom_modal_progress_hud.dart';
+import 'package:tinder_app_flutter/ui/widgets/event_card.dart';
 import 'package:tinder_app_flutter/util/constants.dart';
 
 class EventScreen extends StatefulWidget {
@@ -15,7 +19,24 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   final FirebaseDatabaseSource _databaseSource = FirebaseDatabaseSource();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  Future eventsFuture;
+  List<String> places = [];
+  String kGoogleApiKey;
+  GoogleMapsPlaces _googleMapsPlaces;
+  Future eventFuture;
+
+  @override
+  initState() {
+    super.initState();
+    getPlacesKey();
+    eventFuture = getEvents();
+  }
+
+  getPlacesKey() async {
+    var k = new DotEnv();
+    await k.load();
+    kGoogleApiKey = k.env['PLACES_KEY'];
+    _googleMapsPlaces = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+  }
 
   Future<List<Event>> getEvents() async {
     QuerySnapshot res = await _databaseSource.getEvents();
@@ -26,6 +47,9 @@ class _EventScreenState extends State<EventScreen> {
         var _docs = res.docs[i];
         var _event = Event.fromSnapshot(
             await _databaseSource.getEventById(res.docs[i].id));
+        var placesDetail =
+            await _googleMapsPlaces.getDetailsByPlaceId(_event.placeID);
+        places.add(placesDetail.result.name);
         _allEvents.add(_event);
       }
       return _allEvents;
@@ -35,13 +59,27 @@ class _EventScreenState extends State<EventScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    eventsFuture = getEvents();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var futureBuilder = new FutureBuilder(
+        future: eventFuture,
+        builder: (context, snap) {
+          return CustomModalProgressHUD(
+              inAsyncCall: !snap.hasData,
+              child: snap.hasData
+                  ? ListView.builder(
+                      padding: EdgeInsets.all(8),
+                      itemCount: snap.data.length,
+                      itemBuilder: (context, int index) {
+                        Event _curr = snap.data[index];
+                        return EventCard(
+                            name: _curr.name,
+                            host: _curr.hostName,
+                            date: _curr.date,
+                            time: _curr.time,
+                            location: places[index]);
+                      })
+                  : SizedBox());
+        });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -49,30 +87,7 @@ class _EventScreenState extends State<EventScreen> {
         centerTitle: true,
       ),
       key: _scaffoldKey,
-      body: Stack(
-        children: [
-          FutureBuilder(
-              future: getEvents(),
-              builder: (context, snap) {
-                if (snap.hasData) {
-                  return ListView.builder(
-                      padding: EdgeInsets.all(8),
-                      itemCount: snap.data.length,
-                      itemBuilder: (context, int index) {
-                        return Container(
-                          height: 100,
-                          width: 300,
-                          child: Text(
-                            '${snap.data[index].name}',
-                            style: TextStyle(color: Colors.amber),
-                          ),
-                        );
-                      });
-                } else
-                  return SizedBox();
-              })
-        ],
-      ),
+      body: futureBuilder,
       floatingActionButton: FloatingActionButton(
         backgroundColor: kAccentColor,
         foregroundColor: kSecondaryColor,
@@ -86,7 +101,9 @@ class _EventScreenState extends State<EventScreen> {
               },
             ),
           );
-          getEvents();
+          setState(() {
+            eventFuture = getEvents();
+          });
         },
       ),
     );
