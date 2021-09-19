@@ -54,7 +54,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                               return chatWithUsersSnapshot.data.length == 0
                                   ? Center(
                                       child: Container(
-                                          child: Text('No matches',
+                                          child: Text('No messages',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline4)),

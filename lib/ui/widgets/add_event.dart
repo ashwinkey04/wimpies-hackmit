@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_google_places/flutter_google_places.dart' as fgp;
 import 'package:tinder_app_flutter/ui/widgets/bordered_text_field.dart';
 import 'package:tinder_app_flutter/util/constants.dart';
@@ -26,12 +27,19 @@ class _AddEventDialogState extends State<AddEventDialog> {
   final eventLocationController = TextEditingController();
   final eventDateController = TextEditingController();
   final eventTimeController = TextEditingController();
-
+  String kGoogleApiKey;
   @override
   void initState() {
     super.initState();
     eventNameController.text = '';
     eventLocationController.text = '';
+    getPlacesKey();
+  }
+
+  getPlacesKey() async {
+    var k = new DotEnv();
+    await k.load();
+    kGoogleApiKey = k.env['PLACES_KEY'];
   }
 
   @override
@@ -59,8 +67,6 @@ class _AddEventDialogState extends State<AddEventDialog> {
             ),
             InkWell(
                 onTap: () async {
-                  final kGoogleApiKey = '';
-                  // = "";
                   var _selectedLocation = await fgp.PlacesAutocomplete.show(
                     context: context,
                     apiKey: kGoogleApiKey,

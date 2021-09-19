@@ -1,4 +1,3 @@
-import 'package:breathing_collection/breathing_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:tinder_app_flutter/data/db/remote/firebase_database_source.dart';
 import 'package:tinder_app_flutter/ui/widgets/add_event.dart';
