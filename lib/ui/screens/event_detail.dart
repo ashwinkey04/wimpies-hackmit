@@ -28,17 +28,15 @@ class EventDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Hero(
-                  tag: 'name',
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Text(name,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w600,
-                        )),
-                  )),
+              Container(
+                color: Colors.transparent,
+                child: Text(name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ),
               Text(host, style: TextStyle(color: Colors.white54)),
               Divider(
                 color: Colors.white,
