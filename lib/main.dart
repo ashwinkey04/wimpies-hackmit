@@ -69,9 +69,8 @@ class MyApp extends StatelessWidget {
                     as Map)['my_profile_photo_path'],
                 myUserId: (ModalRoute.of(context).settings.arguments
                     as Map)['my_user_id'],
-                    otherUserName: (ModalRoute.of(context)
-                    .settings
-                    .arguments as Map)['other_user_name'],
+                otherUserName: (ModalRoute.of(context).settings.arguments
+                    as Map)['other_user_name'],
                 otherUserProfilePhotoPath: (ModalRoute.of(context)
                     .settings
                     .arguments as Map)['other_user_profile_photo_path'],

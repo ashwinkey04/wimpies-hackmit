@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tinder_app_flutter/data/model/top_navigation_item.dart';
 import 'package:tinder_app_flutter/ui/screens/top_navigation_screens/event_screen.dart';
 import 'package:tinder_app_flutter/ui/screens/top_navigation_screens/profile_screen.dart';
 import 'top_navigation_screens/chats_screen.dart';
