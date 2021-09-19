@@ -26,8 +26,8 @@ class EventCard extends StatelessWidget {
           width: 1,
         ),
       ),
-      // shadowColor: kAccentColor,
-      elevation: 5,
+      shadowColor: Colors.black,
+      elevation: 15,
       child: Container(
         width: 400,
         height: 220,
@@ -47,12 +47,15 @@ class EventCard extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 3.0, 0, 0),
-                        child: Text(
-                          name,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                        child: Hero(
+                          tag: 'name',
+                          child: Text(
+                            name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
@@ -88,12 +91,16 @@ class EventCard extends StatelessWidget {
                     //   Icons.confirmation_num_rounded,
                     //   size: 12,
                     // ),
-                    Text(
-                      location,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      height: 20,
+                      child: Text(
+                        location,
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     SizedBox(

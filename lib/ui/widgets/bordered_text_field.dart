@@ -10,6 +10,7 @@ class BorderedTextField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final textController;
   final prefixIcon;
+  final bool isBorder;
   // final Function onSubmit;
 
   BorderedTextField(
@@ -21,6 +22,7 @@ class BorderedTextField extends StatelessWidget {
       this.textCapitalization = TextCapitalization.none,
       this.textController,
       this.prefixIcon,
+      this.isBorder
       // this.onSubmit
       });
 
@@ -44,7 +46,7 @@ class BorderedTextField extends StatelessWidget {
         labelStyle: TextStyle(color: kSecondaryColor.withOpacity(0.5)),
         border: UnderlineInputBorder(),
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: color),
+          borderSide: BorderSide(color: isBorder ? color : Colors.transparent),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: color),

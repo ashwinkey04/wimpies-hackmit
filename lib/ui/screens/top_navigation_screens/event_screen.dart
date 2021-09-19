@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:tinder_app_flutter/data/db/entity/event.dart';
 import 'package:tinder_app_flutter/data/db/remote/firebase_database_source.dart';
+import 'package:tinder_app_flutter/ui/screens/event_detail.dart';
 import 'package:tinder_app_flutter/ui/widgets/add_event.dart';
 import 'package:tinder_app_flutter/ui/widgets/custom_modal_progress_hud.dart';
 import 'package:tinder_app_flutter/ui/widgets/event_card.dart';
@@ -50,7 +52,8 @@ class _EventScreenState extends State<EventScreen> {
             await _databaseSource.getEventById(res.docs[i].id));
         var placesDetail =
             await _googleMapsPlaces.getDetailsByPlaceId(_event.placeID);
-        places.add(placesDetail.result.name);
+        places.add(
+            '${placesDetail.result.name}, ${placesDetail.result.formattedAddress}');
         _allEvents.add(_event);
       }
       return _allEvents;
@@ -72,12 +75,30 @@ class _EventScreenState extends State<EventScreen> {
                       itemCount: snap.data.length,
                       itemBuilder: (context, int index) {
                         Event _curr = snap.data[index];
-                        return EventCard(
-                            name: _curr.name,
-                            host: _curr.hostName,
-                            date: _curr.date,
-                            time: _curr.time,
-                            location: places[index]);
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EventDetail(
+                                          name: _curr.name,
+                                          host: _curr.hostName,
+                                          date: _curr.date,
+                                          time: _curr.time,
+                                          location: places[index],
+                                          desc: _curr.eventDesc,
+                                        )));
+                          },
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: EventCard(
+                                name: _curr.name,
+                                host: _curr.hostName,
+                                date: _curr.date,
+                                time: _curr.time,
+                                location: places[index]),
+                          ),
+                        );
                       })
                   : SizedBox());
         });

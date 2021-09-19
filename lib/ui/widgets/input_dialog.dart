@@ -38,6 +38,7 @@ class _InputDialogState extends State<InputDialog> {
         keyboardType: TextInputType.text,
         onChanged: (value) => {inputText = value},
         textController: textController,
+        isBorder: true,
       ),
       actions: <Widget>[
         FlatButton(
