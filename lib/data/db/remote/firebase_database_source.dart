@@ -9,8 +9,8 @@ import 'package:tinder_app_flutter/data/db/entity/swipe.dart';
 class FirebaseDatabaseSource {
   final FirebaseFirestore instance = FirebaseFirestore.instance;
 
-  void addEvent(Event event) {
-    instance
+  void addEvent(Event event) async {
+    await instance
         .collection('event')
         .add(({
           'hostName': event.hostName,

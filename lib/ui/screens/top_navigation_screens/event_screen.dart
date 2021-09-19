@@ -39,6 +39,7 @@ class _EventScreenState extends State<EventScreen> {
   }
 
   Future<List<Event>> getEvents() async {
+    debugPrint('Called getEvents');
     QuerySnapshot res = await _databaseSource.getEvents();
     if (res.docs.length > 0) {
       int i = 0;
@@ -98,12 +99,12 @@ class _EventScreenState extends State<EventScreen> {
             builder: (_) => AddEventDialog(
               onSavePressed: (event) {
                 _databaseSource.addEvent(event);
+                setState(() {
+                  eventFuture = getEvents();
+                });
               },
             ),
           );
-          setState(() {
-            eventFuture = getEvents();
-          });
         },
       ),
     );
