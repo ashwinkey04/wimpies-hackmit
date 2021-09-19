@@ -259,8 +259,10 @@ class _AddEventDialogState extends State<AddEventDialog> {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             onPressed: () {
+                              var _host = userSnapshot.data.name;
                               Event event = Event(
-                                  hostName: userSnapshot.data.name,
+                                  hostName:
+                                      _host == '' ? 'User' : _host ?? 'User',
                                   name: eventNameText,
                                   placeID: eventPlaceId,
                                   time: eventTimeController.text,
